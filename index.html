@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bruno Lago | Portfolio</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-main: #18181b;
+            --text-muted: #52525b;
+            --border-color: #e4e4e7;
+            --accent: #27272a;
+            --btn-bg: #f4f4f5;
+            --btn-hover: #e4e4e7;
+            
+            /* Cores de Hover para as Ferramentas */
+            --hover-python: #eab308;
+            --hover-c: #3b82f6;
+            --hover-csharp: #9333ea;
+            --hover-swift: #f97316;
+            --hover-vs: #8b5cf6;
+            --hover-vscode: #0ea5e9;
+            --hover-xcode: #0284c7;
+            --hover-github: #a855f7;
+            --hover-email: #ef4444;
+
+            /* Cores de Hover para as IAs */
+            --hover-chatgpt: #10a37f;
+            --hover-gemini: #4285f4;
+            --hover-claude: #d97757;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0f0f11;
+            --text-main: #ededed;
+            --text-muted: #a1a1aa;
+            --border-color: #27272a;
+            --accent: #ffffff;
+            --btn-bg: #18181b;
+            --btn-hover: #27272a;
+            --hover-chatgpt: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .icon-btn {
+            background: var(--btn-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .icon-btn:hover { background: var(--btn-hover); }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--text-muted);
+            margin: 0 0 1rem 0;
+        }
+
+        .header-contacts {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .contact-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .contact-link.github:hover { color: var(--hover-github); }
+        .contact-link.email:hover { color: var(--hover-email); }
+
+        .tabs {
+            display: flex;
+            gap: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            color: var(--text-main);
+            border-bottom: 2px solid var(--text-main);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 3rem 0 1.5rem 0;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        p { color: var(--text-main); margin-bottom: 1rem; font-size: 1.05rem; }
+
+        .lang-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .lang-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.05rem;
+            color: var(--text-main);
+        }
+
+        .emoji-flag { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: 1.2rem; }
+
+        .stack-list, .ai-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            list-style: none;
+            padding: 0;
+        }
+
+        .stack-list li, .ai-list li {
+            background: var(--btn-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            cursor: default;
+        }
+
+        .stack-list li::before {
+            content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: var(--text-muted); transition: background-color 0.2s;
+        }
+
+        /* Tech Hover Effects */
+        .tech-python:hover { color: var(--hover-python); border-color: var(--hover-python); }
+        .tech-python:hover::before { background-color: var(--hover-python); }
+        .tech-c:hover { color: var(--hover-c); border-color: var(--hover-c); }
+        .tech-c:hover::before { background-color: var(--hover-c); }
+        .tech-csharp:hover { color: var(--hover-csharp); border-color: var(--hover-csharp); }
+        .tech-csharp:hover::before { background-color: var(--hover-csharp); }
+        .tech-swift:hover { color: var(--hover-swift); border-color: var(--hover-swift); }
+        .tech-swift:hover::before { background-color: var(--hover-swift); }
+        .tech-vs:hover { color: var(--hover-vs); border-color: var(--hover-vs); }
+        .tech-vs:hover::before { background-color: var(--hover-vs); }
+        .tech-vscode:hover { color: var(--hover-vscode); border-color: var(--hover-vscode); }
+        .tech-vscode:hover::before { background-color: var(--hover-vscode); }
+        .tech-xcode:hover { color: var(--hover-xcode); border-color: var(--hover-xcode); }
+        .tech-xcode:hover::before { background-color: var(--hover-xcode); }
+
+        /* AI Hover Effects */
+        .ai-list li svg { width: 16px; height: 16px; fill: var(--text-muted); transition: fill 0.2s; }
+        .ai-gemini:hover { color: var(--hover-gemini); border-color: var(--hover-gemini); }
+        .ai-gemini:hover svg { fill: var(--hover-gemini); }
+        .ai-chatgpt:hover { color: var(--hover-chatgpt); border-color: var(--hover-chatgpt); }
+        .ai-chatgpt:hover svg { fill: var(--hover-chatgpt); }
+        .ai-claude:hover { color: var(--hover-claude); border-color: var(--hover-claude); }
+        .ai-claude:hover svg { fill: var(--hover-claude); }
+
+        /* Timeline de Educação */
+        .edu-timeline {
+            border-left: 2px solid var(--border-color);
+            padding-left: 1.5rem;
+            margin-left: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .edu-item { position: relative; }
+        .edu-item::before {
+            content: ""; position: absolute; left: -1.85rem; top: 0.3rem; width: 12px; height: 12px;
+            background: var(--bg-color); border: 2px solid var(--text-muted); border-radius: 50%;
+        }
+        .edu-year { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.2rem; }
+        .edu-title { font-size: 1.1rem; font-weight: 600; color: var(--text-main); margin: 0 0 0.3rem 0; }
+        .edu-desc { font-size: 0.95rem; color: var(--text-muted); margin: 0; }
+
+        /* Timeline de Viagens */
+        .travel-container { margin-top: 2rem; }
+        .travel-gallery {
+            width: 100%; height: 400px; border-radius: 12px; overflow: hidden; position: relative;
+            background: var(--border-color); margin-bottom: 1rem;
+        }
+
+        .travel-img {
+            width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;
+            opacity: 0; transition: opacity 0.8s ease-in-out;
+        }
+        .travel-img.active { opacity: 1; }
+
+        .travel-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white;
+            box-sizing: border-box; z-index: 10;
+        }
+        .travel-overlay h3 { margin: 0; font-size: 2rem; }
+
+        .timeline { display: flex; justify-content: space-between; position: relative; padding: 1rem 0; }
+        .timeline::before {
+            content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 2px;
+            background: var(--border-color); z-index: 1; transform: translateY(-50%);
+        }
+        
+        .timeline-point {
+            position: relative; z-index: 2; background: var(--bg-color); padding: 0 10px;
+            display: flex; flex-direction: column; align-items: center; cursor: pointer;
+        }
+        .point-dot {
+            width: 14px; height: 14px; background: var(--border-color); border-radius: 50%;
+            margin-bottom: 8px; transition: all 0.3s;
+        }
+        .timeline-point.active .point-dot { background: var(--text-main); transform: scale(1.3); }
+        .point-year { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+        .timeline-point.active .point-year { color: var(--text-main); }
+
+        footer {
+            margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color);
+            display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem;
+        }
+        
+        .footer-left span:first-child { color: var(--text-main); font-weight: 500; }
+        .privacy-trigger { color: var(--text-muted); cursor: pointer; text-decoration: underline; background: none; border: none; padding: 0; font: inherit; margin-left: 5px; }
+        
+        .footer-right { display: flex; gap: 1.5rem; }
+
+        /* Modal Privacy Policy */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.5); z-index: 99;
+        }
+        .modal-window {
+            display: none; position: fixed; top: 20%; left: 50%; transform: translateX(-50%);
+            width: 450px; background: var(--bg-color); border: 1px solid var(--border-color);
+            border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 100;
+            overflow: hidden;
+        }
+        .modal-header {
+            background: var(--btn-bg); padding: 0.8rem 1rem; border-bottom: 1px solid var(--border-color);
+            display: flex; justify-content: space-between; align-items: center; cursor: grab; user-select: none;
+        }
+        .modal-header:active { cursor: grabbing; }
+        .modal-title { font-weight: 600; font-size: 0.95rem; margin: 0; }
+        .close-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.2rem; }
+        .modal-body { padding: 1.5rem; max-height: 400px; overflow-y: auto; font-size: 0.9rem; color: var(--text-muted); }
+
+        /* Menu de Idiomas */
+        .lang-menu {
+            position: absolute; top: 120%; right: 0; background: var(--bg-color); border: 1px solid var(--border-color);
+            border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: none; flex-direction: column;
+            width: 120px; overflow: hidden; z-index: 50;
+        }
+        .lang-menu.show { display: flex; }
+        .lang-menu button {
+            background: none; border: none; padding: 0.8rem 1rem; text-align: left; color: var(--text-main);
+            cursor: pointer; font-size: 0.9rem; transition: background 0.2s;
+        }
+        .lang-menu button:hover { background: var(--btn-hover); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Bruno Lago</h1>
+                <h2 id="t-subtitle">Computer Science Student</h2>
+                <div class="header-contacts">
+                    <a href="https://github.com/brunomlago" target="_blank" class="contact-link github">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                    <a href="mailto:bruno.mlago@senacsp.edu.br" class="contact-link email">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        E-mail
+                    </a>
+                </div>
+            </div>
+            <div class="header-controls">
+                <div style="position: relative;">
+                    <button class="icon-btn" id="langToggle" aria-label="Language">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l6 6M4 14l6-6 2-3M2 5h12M7 2h1M22 22l-5-10-5 10M14 18h6"/></svg>
+                    </button>
+                    <div class="lang-menu" id="langMenu">
+                        <button onclick="setLang('en')">English</button>
+                        <button onclick="setLang('pt')">Português</button>
+                        <button onclick="setLang('es')">Español</button>
+                        <button onclick="setLang('zh')">中文 (Mandarim)</button>
+                        <button onclick="setLang('hi')">हिन्दी (Hindi)</button>
+                    </div>
+                </div>
+                <button class="icon-btn" id="themeToggle" aria-label="Toggle Theme">🌗</button>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('profissional')" id="t-tab-pro">Professional</button>
+            <button class="tab-btn" onclick="openTab('pessoal')" id="t-tab-per">Personal</button>
+        </div>
+
+        <main>
+            <!-- ABA PROFISSIONAL -->
+            <div id="profissional" class="tab-content active">
+                <section>
+                    <h3 class="section-title" id="t-about-title">About Me</h3>
+                    <p id="t-about-1">Hello, I am Bruno Lago, 19 years old, currently in my 4th semester of Computer Science. My journey is focused on building a rigorous foundation in computational logic, combined with the practical development of high-quality software.</p>
+                </section>
+
+                <section>
+                    <h3 class="section-title" id="t-edu-title">Education</h3>
+                    <div class="edu-timeline">
+                        <div class="edu-item">
+                            <div class="edu-year" id="t-edu-year-1">2025 - Present</div>
+                            <h4 class="edu-title" id="t-edu-course-1">Bachelor of Computer Science</h4>
+                        </div>
+                        <div class="edu-item">
+                            <div class="edu-year">2022 - 2024</div>
+                            <h4 class="edu-title" id="t-edu-course-2">Technical Degree in Information Technology</h4>
+                            <p class="edu-desc" id="t-edu-desc-2">Integrated High School</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="section-title" id="t-tech-title">Technologies & Tools</h3>
+                    <ul class="stack-list">
+                        <li class="tech-c">C</li>
+                        <li class="tech-csharp">C#</li>
+                        <li class="tech-swift">Swift</li>
+                        <li class="tech-python">Python</li>
+                        <li class="tech-vs">Visual Studio</li>
+                        <li class="tech-vscode">VS Code</li>
+                        <li class="tech-xcode">Xcode</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3 class="section-title" id="t-ai-title">AI Tools</h3>
+                    <ul class="ai-list">
+                        <li class="ai-chatgpt">
+                            <svg viewBox="0 0 24 24"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A6.0651 6.0651 0 0 0 19.02 19.8182a5.9847 5.9847 0 0 0 3.9977-2.9001 6.0462 6.0462 0 0 0-.7358-7.097zM11.7583 20.655a4.3414 4.3414 0 0 1-3.7547-2.1648l1.7963-1.0366a2.6288 2.6288 0 0 0 3.1979-1.0965l2.671-4.6264 1.4883.8596-3.8344 6.6415a4.321 4.321 0 0 1-1.5644 1.4232zM5.3853 17.6534a4.3268 4.3268 0 0 1-.773-4.2384l1.7958 1.0367a2.6457 2.6457 0 0 0 .6168 3.32l4.006 3.469-1.4883.8595-5.321-4.6146a4.3312 4.3312 0 0 1-1.1663-1.8322zm-1.076-8.9107a4.3268 4.3268 0 0 1 2.9818-3.0736l-.0019 2.0734a2.6373 2.6373 0 0 0-1.8143 2.8253l1.3355 5.394-1.7247-.0019-1.3355-5.394a4.3268 4.3268 0 0 1 .5591-1.8232zm13.3892 2.2223a2.6457 2.6457 0 0 0-1.8143-2.8253l.0019-2.0734a4.3268 4.3268 0 0 1 2.9818 3.0736 4.3312 4.3312 0 0 1 .5591 1.8232l-1.3355 5.394-1.7247.0019 1.3355-5.394zm-1.4277-3.9515a4.321 4.321 0 0 1 1.5644-1.4232l3.8344-6.6415-1.4883-.8596-2.671 4.6264a2.6288 2.6288 0 0 0-3.1979 1.0965L12.396 7.7885a4.3414 4.3414 0 0 1 3.7547 2.1648zm-6.2625-1.4087l-4.006-3.469a2.6457 2.6457 0 0 0-.6168-3.32L5.3853 3.3466a4.3268 4.3268 0 0 1 4.2384.773a4.3312 4.3312 0 0 1 1.8322 1.1663l5.321 4.6146-1.4883.8595zm5.725 5.0934l-3.3283-5.7645-3.3283 5.7645 3.3283 5.7645 3.3283-5.7645z"/></svg>
+                            ChatGPT
+                        </li>
+                        <li class="ai-gemini">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C12 7.52 7.52 12 2 12C7.52 12 12 16.48 12 22C12 16.48 16.48 12 22 12C16.48 12 12 7.52 12 2Z"/></svg>
+                            Gemini
+                        </li>
+                        <li class="ai-claude">
+                            <svg viewBox="0 0 24 24"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+                            Claude
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h3 class="section-title" id="t-lang-title">Spoken Languages</h3>
+                    <ul class="lang-list">
+                        <li><span class="emoji-flag">🇧🇷</span> <span id="t-lang-pt">Portuguese (Native)</span></li>
+                        <li><span class="emoji-flag">🇺🇸</span> <span id="t-lang-en">English (Intermediate)</span></li>
+                        <li><span class="emoji-flag">🇪🇸</span> <span id="t-lang-es">Spanish (Intermediate)</span></li>
+                    </ul>
+                </section>
+            </div>
+
+            <!-- ABA PESSOAL -->
+            <div id="pessoal" class="tab-content">
+                <section>
+                    <h3 class="section-title" id="t-hobbies-title">Hobbies</h3>
+                    <p id="t-hobbies-desc">My primary focus lies in continuous learning. In my free time, I dedicate myself to studying new concepts, refining my programming logic, and deepening my understanding of the theoretical foundations that drive modern technology. I approach my personal projects with the same analytical mindset and professionalism as my academic work.</p>
+                </section>
+
+                <section>
+                    <h3 class="section-title" id="t-hard-title">Hardware & Architecture</h3>
+                    <p id="t-hard-desc">Beyond code, I possess a deep interest in the physical infrastructure of computing. I am experienced in hardware assembly, thermal optimization, and system architecture. My current workstation features an AMD Ryzen 7 5800X, paired with an RX 7600 and 64GB of RAM.</p>
+                </section>
+
+                <section class="travel-container">
+                    <h3 class="section-title" id="t-travel-title">Travels</h3>
+                    
+                    <div class="travel-gallery">
+                        <!-- Imagens escondidas carregadas simultaneamente para evitar piscar -->
+                        <img src="https://images.unsplash.com/photo-1612450849206-8d6ec7a810ea?q=80&w=2070" class="travel-img active" id="img-0" alt="Argentina">
+                        <img src="https://images.unsplash.com/photo-1514214246283-d427a95c5d2f?q=80&w=2080" class="travel-img" id="img-1" alt="Miami">
+                        <img src="https://images.unsplash.com/photo-1588668214407-6ea9a6d8c272?q=80&w=2071" class="travel-img" id="img-2" alt="Lisboa">
+                        <img src="https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=1974" class="travel-img" id="img-3" alt="Grécia">
+                        <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=2070" class="travel-img" id="img-4" alt="Nova Iorque">
+                        
+                        <div class="travel-overlay">
+                            <h3 id="travel-location">Argentina</h3>
+                        </div>
+                    </div>
+
+                    <div class="timeline">
+                        <div class="timeline-point active" onclick="setTravel(0)">
+                            <div class="point-dot"></div>
+                            <div class="point-year">2013</div>
+                        </div>
+                        <div class="timeline-point" onclick="setTravel(1)">
+                            <div class="point-dot"></div>
+                            <div class="point-year">2015</div>
+                        </div>
+                        <div class="timeline-point" onclick="setTravel(2)">
+                            <div class="point-dot"></div>
+                            <div class="point-year">2018</div>
+                        </div>
+                        <div class="timeline-point" onclick="setTravel(3)">
+                            <div class="point-dot"></div>
+                            <div class="point-year">2019</div>
+                        </div>
+                        <div class="timeline-point" onclick="setTravel(4)">
+                            <div class="point-dot"></div>
+                            <div class="point-year">2024</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-left">
+                <span>Bruno Lago | </span>
+                <button class="privacy-trigger" id="openPrivacy">All rights reserved</button>
+            </div>
+            <div class="footer-right">
+                <a href="https://github.com/brunomlago" target="_blank" class="contact-link github">GitHub</a>
+                <a href="mailto:bruno.mlago@senacsp.edu.br" class="contact-link email">E-mail</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modal de Privacidade -->
+    <div class="modal-overlay" id="privacyOverlay"></div>
+    <div class="modal-window" id="privacyModal">
+        <div class="modal-header" id="modalHeader">
+            <h3 class="modal-title" id="t-priv-title">Privacy Policy</h3>
+            <button class="close-btn" id="closePrivacy">✕</button>
+        </div>
+        <div class="modal-body" id="t-priv-text">
+            <p><strong>1. Data Collection:</strong> This portfolio does not collect, process, or transmit any sensitive personal data from its visitors. We do not use analytical trackers, marketing cookies, or third-party monitoring scripts.</p>
+            <p><strong>2. Local Storage:</strong> The only information saved is your visual preference (Light/Dark Mode) and language selection. This data is strictly stored locally in your own browser's <code>localStorage</code> and is never sent to any external server.</p>
+            <p><strong>3. External Links:</strong> This site contains links to external platforms (GitHub). We are not responsible for the privacy practices of these external services once you navigate away from this page.</p>
+        </div>
+    </div>
+
+    <script>
+        // Tema Claro/Escuro
+        const themeBtn = document.getElementById('themeToggle');
+        if (localStorage.getItem('theme') === 'dark') document.body.setAttribute('data-theme', 'dark');
+        themeBtn.addEventListener('click', () => {
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            isDark ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        });
+
+        // Abas
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Lógica da Timeline de Viagens
+        const locations = ['Argentina', 'Miami', 'Lisboa', 'Grécia', 'Nova Iorque'];
+        const images = document.querySelectorAll('.travel-img');
+        const points = document.querySelectorAll('.timeline-point');
+        const locTitle = document.getElementById('travel-location');
+        let currentTravelIndex = 0;
+        let travelInterval;
+
+        function setTravel(index) {
+            currentTravelIndex = index;
+            
+            images.forEach(img => img.classList.remove('active'));
+            images[index].classList.add('active');
+            
+            points.forEach(p => p.classList.remove('active'));
+            points[index].classList.add('active');
+            
+            locTitle.textContent = locations[index];
+            resetTravelInterval();
+        }
+
+        function nextTravel() {
+            let nextIndex = (currentTravelIndex + 1) % locations.length;
+            setTravel(nextIndex);
+        }
+
+        function resetTravelInterval() {
+            clearInterval(travelInterval);
+            travelInterval = setInterval(nextTravel, 15000);
+        }
+        
+        // Iniciar intervalo de viagens
+        resetTravelInterval();
+
+        // Lógica do Modal de Privacidade
+        const modal = document.getElementById('privacyModal');
+        const overlay = document.getElementById('privacyOverlay');
+        const openBtn = document.getElementById('openPrivacy');
+        const closeBtn = document.getElementById('closePrivacy');
+        const modalHeader = document.getElementById('modalHeader');
+
+        openBtn.onclick = () => { modal.style.display = 'block'; overlay.style.display = 'block'; }
+        closeBtn.onclick = () => { modal.style.display = 'none'; overlay.style.display = 'none'; }
+        overlay.onclick = closeBtn.onclick;
+
+        // Função de Arrastar o Modal perfeitamente
+        let isDragging = false;
+        let startX, startY, initialLeft, initialTop;
+
+        modalHeader.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            const rect = modal.getBoundingClientRect();
+            initialLeft = rect.left;
+            initialTop = rect.top;
+            startX = e.clientX;
+            startY = e.clientY;
+            
+            // Remove a transformação de centralização original do CSS
+            modal.style.transform = 'none';
+            modal.style.left = initialLeft + 'px';
+            modal.style.top = initialTop + 'px';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            modal.style.left = (initialLeft + dx) + 'px';
+            modal.style.top = (initialTop + dy) + 'px';
+        });
+
+        document.addEventListener('mouseup', () => { isDragging = false; });
+
+        // Dicionário de Traduções
+        const dict = {
+            en: {
+                subtitle: "Computer Science Student",
+                tabPro: "Professional", tabPer: "Personal",
+                aboutTitle: "About Me",
+                about1: "Hello, I am Bruno Lago, 19 years old, currently in my 4th semester of Computer Science. My journey is focused on building a rigorous foundation in computational logic, combined with the practical development of high-quality software.",
+                eduTitle: "Education",
+                eduCourse1: "Bachelor of Computer Science", eduCourse2: "Technical Degree in Information Technology", eduDesc2: "Integrated High School",
+                techTitle: "Technologies & Tools", aiTitle: "AI Tools", langTitle: "Spoken Languages",
+                langPt: "Portuguese (Native)", langEn: "English (Intermediate)", langEs: "Spanish (Intermediate)",
+                hobbiesTitle: "Hobbies",
+                hobbiesDesc: "My primary focus lies in continuous learning. In my free time, I dedicate myself to studying new concepts, refining my programming logic, and deepening my understanding of the theoretical foundations that drive modern technology. I approach my personal projects with the same analytical mindset and professionalism as my academic work.",
+                hardTitle: "Hardware & Architecture",
+                hardDesc: "Beyond code, I possess a deep interest in the physical infrastructure of computing. I am experienced in hardware assembly, thermal optimization, and system architecture. My current workstation features an AMD Ryzen 7 5800X, paired with an RX 7600 and 64GB of RAM.",
+                travelTitle: "Travels", privTitle: "Privacy Policy",
+                privText: "<p><strong>1. Data Collection:</strong> This portfolio does not collect, process, or transmit any sensitive personal data from its visitors. We do not use analytical trackers, marketing cookies, or third-party monitoring scripts.</p><p><strong>2. Local Storage:</strong> The only information saved is your visual preference (Light/Dark Mode) and language selection. This data is strictly stored locally in your own browser's <code>localStorage</code> and is never sent to any external server.</p><p><strong>3. External Links:</strong> This site contains links to external platforms (GitHub). We are not responsible for the privacy practices of these external services once you navigate away from this page.</p>"
+            },
+            pt: {
+                subtitle: "Estudante de Ciência da Computação",
+                tabPro: "Profissional", tabPer: "Pessoal",
+                aboutTitle: "Sobre Mim",
+                about1: "Olá, eu sou o Bruno Lago, tenho 19 anos e estou no 4º semestre de Ciência da Computação. Minha jornada é focada em construir uma base rigorosa em lógica computacional, aliada ao desenvolvimento prático de software de alta qualidade.",
+                eduTitle: "Formação Acadêmica",
+                eduCourse1: "Bacharelado em Ciência da Computação", eduCourse2: "Técnico em Tecnologia da Informação", eduDesc2: "Ensino Médio Integrado",
+                techTitle: "Tecnologias e Ferramentas", aiTitle: "Ferramentas de IA", langTitle: "Idiomas",
+                langPt: "Português (Nativo)", langEn: "Inglês (Intermediário)", langEs: "Espanhol (Intermediário)",
+                hobbiesTitle: "Hobbies",
+                hobbiesDesc: "Meu foco principal está no aprendizado contínuo. No meu tempo livre, dedico-me a estudar novos conceitos, refinar minha lógica de programação e aprofundar meu entendimento sobre as bases teóricas que movem a tecnologia moderna. Encaro meus projetos pessoais com a mesma mentalidade analítica e profissionalismo da minha vida acadêmica.",
+                hardTitle: "Hardware e Arquitetura",
+                hardDesc: "Fora do código, possuo um profundo interesse pela infraestrutura física da computação. Tenho experiência prática em montagem de hardware, otimização térmica e arquitetura de sistemas. Minha workstation atual conta com um AMD Ryzen 7 5800X, pareado com uma RX 7600 e 64GB de RAM.",
+                travelTitle: "Viagens", privTitle: "Política de Privacidade",
+                privText: "<p><strong>1. Coleta de Dados:</strong> Este portfólio não coleta, processa ou transmite dados pessoais sensíveis de seus visitantes. Não utilizamos rastreadores analíticos, cookies de marketing ou scripts de monitoramento de terceiros.</p><p><strong>2. Armazenamento Local:</strong> A única informação salva é sua preferência visual (Modo Claro/Escuro) e seleção de idioma. Estes dados ficam estritamente armazenados localmente no <code>localStorage</code> do seu navegador e nunca são enviados para servidores externos.</p><p><strong>3. Links Externos:</strong> Este site contém links para plataformas externas (GitHub). Não somos responsáveis pelas práticas de privacidade destes serviços após a navegação sair desta página.</p>"
+            },
+            es: {
+                subtitle: "Estudiante de Ciencias de la Computación",
+                tabPro: "Profesional", tabPer: "Personal",
+                aboutTitle: "Sobre Mí",
+                about1: "Hola, soy Bruno Lago, tengo 19 años y estoy en el 4º semestre de Ciencias de la Computación. Mi viaje se centra en construir una base rigurosa en lógica computacional, combinada con el desarrollo práctico de software de alta calidad.",
+                eduTitle: "Educación",
+                eduCourse1: "Grado en Ciencias de la Computación", eduCourse2: "Técnico Superior en Informática", eduDesc2: "Educación Secundaria Integrada",
+                techTitle: "Tecnologías y Herramientas", aiTitle: "Herramientas de IA", langTitle: "Idiomas",
+                langPt: "Portugués (Nativo)", langEn: "Inglés (Intermedio)", langEs: "Español (Intermedio)",
+                hobbiesTitle: "Pasatiempos",
+                hobbiesDesc: "Mi enfoque principal radica en el aprendizaje continuo. En mi tiempo libre, me dedico a estudiar nuevos conceptos, refinar mi lógica de programación y profundizar en los fundamentos teóricos que impulsan la tecnología moderna.",
+                hardTitle: "Hardware y Arquitectura",
+                hardDesc: "Más allá del código, poseo un profundo interés en la infraestructura física. Tengo experiencia en ensamblaje de hardware y optimización térmica. Mi estación de trabajo cuenta con un AMD Ryzen 7 5800X, junto con una RX 7600 y 64GB de RAM.",
+                travelTitle: "Viajes", privTitle: "Política de Privacidad",
+                privText: "<p><strong>1. Recopilación de Datos:</strong> Este portafolio no recopila datos personales de sus visitantes.</p><p><strong>2. Almacenamiento Local:</strong> La única información guardada es su preferencia visual y de idioma de forma local.</p><p><strong>3. Enlaces Externos:</strong> Contiene enlaces a plataformas externas (GitHub).</p>"
+            },
+            zh: {
+                subtitle: "计算机科学专业学生",
+                tabPro: "专业", tabPer: "个人",
+                aboutTitle: "关于我",
+                about1: "你好，我是Bruno Lago，19岁，目前是计算机科学专业第四学期的学生。我的旅程专注于建立严格的计算逻辑基础，并结合高质量软件的实际开发。",
+                eduTitle: "教育背景",
+                eduCourse1: "计算机科学学士", eduCourse2: "信息技术专科", eduDesc2: "高中统招",
+                techTitle: "技术与工具", aiTitle: "AI工具", langTitle: "语言",
+                langPt: "葡萄牙语 (母语)", langEn: "英语 (中级)", langEs: "西班牙语 (中级)",
+                hobbiesTitle: "爱好",
+                hobbiesDesc: "我的主要重点是持续学习。在业余时间，我致力于学习新概念，完善我的编程逻辑，并加深对推动现代技术的理论基础的理解。",
+                hardTitle: "硬件与架构",
+                hardDesc: "除了代码，我对计算的物理基础设施有着浓厚的兴趣。我在硬件组装和系统架构方面经验丰富。目前的设备是 AMD Ryzen 7 5800X 搭配 RX 7600 和 64GB 内存。",
+                travelTitle: "旅行", privTitle: "隐私政策",
+                privText: "<p>本网站不收集任何个人数据。仅在您的浏览器中本地保存您的主题和语言偏好。</p>"
+            },
+            hi: {
+                subtitle: "कंप्यूटर विज्ञान के छात्र",
+                tabPro: "पेशेवर", tabPer: "व्यक्तिगत",
+                aboutTitle: "मेरे बारे में",
+                about1: "नमस्ते, मैं ब्रूनो लागो हूँ, 19 वर्ष का, वर्तमान में कंप्यूटर विज्ञान के चौथे सेमेस्टर में हूँ। मेरा लक्ष्य कम्प्यूटेशनल लॉजिक में एक मजबूत आधार बनाना है।",
+                eduTitle: "शिक्षा",
+                eduCourse1: "कंप्यूटर विज्ञान में स्नातक", eduCourse2: "सूचना प्रौद्योगिकी में तकनीकी डिग्री", eduDesc2: "एकीकृत हाई स्कूल",
+                techTitle: "तकनीक और उपकरण", aiTitle: "AI उपकरण", langTitle: "भाषाएं",
+                langPt: "पुर्तगाली (मूल)", langEn: "अंग्रेजी (मध्यवर्ती)", langEs: "स्पेनिश (मध्यवर्ती)",
+                hobbiesTitle: "शौक",
+                hobbiesDesc: "मेरा प्राथमिक ध्यान निरंतर सीखने पर है। अपने खाली समय में, मैं नई अवधारणाओं का अध्ययन करने और अपनी प्रोग्रामिंग लॉजिक को सुधारने के लिए समर्पित हूँ।",
+                hardTitle: "हार्डवेयर और आर्किटेक्चर",
+                hardDesc: "कोड के अलावा, मुझे कंप्यूटिंग के भौतिक बुनियादी ढांचे में गहरी दिलचस्पी है। मेरा वर्तमान वर्कस्टेशन AMD Ryzen 7 5800X, RX 7600 और 64GB RAM के साथ है।",
+                travelTitle: "यात्रा", privTitle: "गोपनीयता नीति",
+                privText: "<p>यह साइट व्यक्तिगत डेटा एकत्र नहीं करती है। यह केवल आपकी थीम और भाषा की प्राथमिकता को स्थानीय रूप से सहेजती है।</p>"
+            }
+        };
+
+        // Lógica do Menu de Idiomas
+        const langToggle = document.getElementById('langToggle');
+        const langMenu = document.getElementById('langMenu');
+
+        langToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', () => {
+            langMenu.classList.remove('show');
+        });
+
+        function setLang(lang) {
+            document.getElementById('t-subtitle').textContent = dict[lang].subtitle;
+            document.getElementById('t-tab-pro').textContent = dict[lang].tabPro;
+            document.getElementById('t-tab-per').textContent = dict[lang].tabPer;
+            document.getElementById('t-about-title').textContent = dict[lang].aboutTitle;
+            document.getElementById('t-about-1').textContent = dict[lang].about1;
+            document.getElementById('t-edu-title').textContent = dict[lang].eduTitle;
+            document.getElementById('t-edu-course-1').textContent = dict[lang].eduCourse1;
+            document.getElementById('t-edu-course-2').textContent = dict[lang].eduCourse2;
+            document.getElementById('t-edu-desc-2').textContent = dict[lang].eduDesc2;
+            document.getElementById('t-tech-title').textContent = dict[lang].techTitle;
+            document.getElementById('t-ai-title').textContent = dict[lang].aiTitle;
+            document.getElementById('t-lang-title').textContent = dict[lang].langTitle;
+            document.getElementById('t-lang-pt').textContent = dict[lang].langPt;
+            document.getElementById('t-lang-en').textContent = dict[lang].langEn;
+            document.getElementById('t-lang-es').textContent = dict[lang].langEs;
+            document.getElementById('t-hobbies-title').textContent = dict[lang].hobbiesTitle;
+            document.getElementById('t-hobbies-desc').textContent = dict[lang].hobbiesDesc;
+            document.getElementById('t-hard-title').textContent = dict[lang].hardTitle;
+            document.getElementById('t-hard-desc').textContent = dict[lang].hardDesc;
+            document.getElementById('t-travel-title').textContent = dict[lang].travelTitle;
+            document.getElementById('t-priv-title').textContent = dict[lang].privTitle;
+            document.getElementById('t-priv-text').innerHTML = dict[lang].privText;
+            
+            if(lang === 'en' || lang === 'pt') {
+                 document.getElementById('t-edu-year-1').textContent = lang === 'pt' ? '2025 - Presente' : '2025 - Present';
+            }
+            
+            localStorage.setItem('lang', lang);
+        }
+
+        // Carregar idioma salvo (Garante que tudo exista antes de aplicar)
+        const savedLang = localStorage.getItem('lang');
+        if (savedLang && dict[savedLang]) {
+            setLang(savedLang);
+        }
+    </script>
+</body>
+</html>
